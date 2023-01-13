@@ -4,36 +4,26 @@ import Foundation
 class EventsAPIMock: EventsAPI {
     private typealias MockEvent = [String: Any]
 
-    private var queuedEvents = [MockEvent]()
-    private var immediateEvents = [MockEvent]()
+    private var events = [MockEvent]()
 
     func sendTurnstileEvent(sdkIdentifier: String, sdkVersion: String) {
-        immediateEvents.append([EventKey.event.rawValue: EventType.turnstile.rawValue])
+        events.append([EventKey.event.rawValue: EventType.turnstile.rawValue])
     }
 
-    func sendQueuedEvent(with attributes: [String: Any]) {
-        queuedEvents.append(attributes)
-    }
-
-    func sendImmediateEvent(with attributes: [String: Any]) {
-        immediateEvents.append(attributes)
+    func sendEvent(with attributes: [String: Any]) {
+        events.append(attributes)
     }
 
     func reset() {
-        queuedEvents.removeAll()
-        immediateEvents.removeAll()
+        events.removeAll()
     }
 
-    func hasQueuedEvent(with name: String) -> Bool {
-        return hasEvent(in: queuedEvents, key: .event, value: name)
+    func hasEvent(with name: String) -> Bool {
+        return hasEvent(in: events, key: .event, value: name)
     }
 
-    func hasImmediateEvent(with name: String) -> Bool {
-        return hasEvent(in: immediateEvents, key: .event, value: name)
-    }
-
-    func immediateEventCount(with name: String) -> Int {
-        return immediateEvents.filter { (event) in
+    func eventCount(with name: String) -> Int {
+        return events.filter { (event) in
             return event[EventKey.event.rawValue] as? String == name
         }.count
     }

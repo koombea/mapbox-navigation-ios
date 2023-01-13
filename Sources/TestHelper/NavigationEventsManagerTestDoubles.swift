@@ -39,16 +39,12 @@ public class NavigationEventsManagerSpy: NavigationEventsManager {
         locations.removeAll()
     }
 
-    func hasImmediateEvent(with eventName: String) -> Bool {
-        return eventsAPIMock.hasImmediateEvent(with: eventName)
+    func hasEvent(with eventName: String) -> Bool {
+        return eventsAPIMock.hasEvent(with: eventName)
     }
 
-    func immediateEventCount(with eventName: String) -> Int {
-        return eventsAPIMock.immediateEventCount(with: eventName)
-    }
-
-    func hasQueuedEvent(with eventName: String) -> Bool {
-        return eventsAPIMock.hasQueuedEvent(with: eventName)
+    func eventCount(with eventName: String) -> Int {
+        return eventsAPIMock.eventCount(with: eventName)
     }
 
     public override func navigationDepartEvent() -> ActiveNavigationEventDetails? {

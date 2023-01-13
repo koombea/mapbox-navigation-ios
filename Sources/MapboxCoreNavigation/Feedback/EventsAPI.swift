@@ -3,8 +3,7 @@ import Foundation
 
 protocol EventsAPI {
     func sendTurnstileEvent(sdkIdentifier: String, sdkVersion: String)
-    func sendQueuedEvent(with attributes: [String: Any])
-    func sendImmediateEvent(with attributes: [String: Any])
+    func sendEvent(with attributes: [String: Any])
 }
 
 extension EventsService: EventsAPI {
@@ -13,11 +12,7 @@ extension EventsService: EventsAPI {
         sendTurnstileEvent(for: turnstileEvent)
     }
 
-    func sendQueuedEvent(with attributes: [String : Any]) {
+    func sendEvent(with attributes: [String : Any]) {
         sendEvent(for: Event(priority: .queued, attributes: attributes, deferredOptions: nil))
-    }
-
-    func sendImmediateEvent(with attributes: [String : Any]) {
-        sendEvent(for: Event(priority: .immediate, attributes: attributes, deferredOptions: nil))
     }
 }
