@@ -13,6 +13,11 @@ extension EventsService: EventsAPI {
     }
 
     func sendEvent(with attributes: [String : Any]) {
-        sendEvent(for: Event(priority: .queued, attributes: attributes, deferredOptions: nil))
+        let priority: EventPriority = EventsApiConfiguration.delaysEventFlushing ? .queued : .immediate
+        sendEvent(for: Event(priority: priority, attributes: attributes, deferredOptions: nil))
     }
+}
+
+@_spi(MapboxInternal) public final class EventsApiConfiguration {
+    public static var delaysEventFlushing = true
 }
